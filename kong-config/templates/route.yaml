@@ -1,0 +1,16 @@
+{{- range .Values.routes }}
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongRoute
+metadata:
+  name: {{ $.Values.environment }}-{{ .name }}
+  namespace: kong
+spec:
+  protocols:
+    - http
+  paths:
+    - {{ .path }}
+  stripPath: true
+  service:
+    name: {{ $.Values.environment }}-{{ .service }}
+{{- end }}

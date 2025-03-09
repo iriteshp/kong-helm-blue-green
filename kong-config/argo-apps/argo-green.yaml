@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kong-green
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/iriteshp/kong-helm-blue-green'
+    path: kong-config
+    helm:
+      valueFiles:
+        - values/values-green.yaml
+  destination:
+    namespace: kong
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
