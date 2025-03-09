@@ -6,16 +6,17 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/iriteshp/kong-helm-blue-green'  # Ensure this is your correct repo
+    repoURL: 'https://github.com/iriteshp/kong-helm-blue-green.git'
     path: kong-config
     targetRevision: HEAD
     helm:
       valueFiles:
         - values/values-blue.yaml
   destination:
-    server: https://kubernetes.default.svc  # 👈 Add this line if missing
+    server: https://kubernetes.default.svc
     namespace: kong
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+
