@@ -1,17 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kong-green
+  name: kong-db-less
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/iriteshp/kong-helm-blue-green'
-    path: kong-config
-    helm:
-      valueFiles:
-        - values/values-green.yaml
+    repoURL: "https://github.com/iriteshp/kong-helm-blue-green.git"
+    targetRevision: main
+    path: .
   destination:
+    server: https://kubernetes.default.svc
     namespace: kong
   syncPolicy:
     automated:

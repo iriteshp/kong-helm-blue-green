@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kong-config
+  namespace: kong
+data:
+  kong.yml: |
+    _format_version: "3.0"
+
+    services:
+      - name: echo-service
+        url: http://echo-service.kong.svc.cluster.local:80
+        routes:
+          - name: echo-route
+            paths:
+              - /echo
+
+      - name: user-service
+        url: http://user-service.kong.svc.cluster.local:80
+        routes:
+          - name: user-route
+            paths:
+              - /users
