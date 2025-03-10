@@ -21,3 +21,22 @@ routes:
   - name: "route-3"
     path: "/api/service-3"
     service: "service-3"
+
+ingressController:
+  enabled: true
+  installCRDs: true
+  readinessProbe:
+    httpGet:
+      path: /status
+      port: 8001
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    failureThreshold: 3
+
+admin:
+  enabled: true
+  http:
+    enabled: true
+    servicePort: 8001
+    nodePort: 32001
+    type: NodePort
