@@ -4,11 +4,13 @@ namespace: kong
 
 configMapGenerator:
   - name: kong-config
+    behavior: create
+    options:
+      disableNameSuffixHash: true
     files:
       - services/echo.yaml
       - services/user.yaml
 
 resources:
-  - kong-configmap.yaml
   - kong-deployment.yaml
   - kong-service.yaml

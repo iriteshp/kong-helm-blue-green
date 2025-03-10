@@ -1,9 +1,33 @@
-_format_version: "3.0"
-
-services:
-  - name: user-service
-    url: http://user-service.kong.svc.cluster.local:80
-    routes:
-      - name: user-route
-        paths:
-          - /users
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-server
+  namespace: kong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-server
+  template:
+    metadata:
+      labels:
+        app: user-server
+    spec:
+      containers:
+        - name: user-server
+          image: ealen/user-server
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: kong
+spec:
+  selector:
+    app: user-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
